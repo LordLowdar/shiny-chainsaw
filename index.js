@@ -111,6 +111,7 @@ var teamMembers = [];
 
 const init = async () => {
   const res = await iq.prompt(managerPrompt);
+  console.log(res);
   const manager = new Manager(
     res.managerName,
     res.managerId,
@@ -124,35 +125,36 @@ const init = async () => {
 
 const teamInfo = async () => {
   const res = await iq.prompt(teamPrompt);
-  if (res.teamSelect === "Engineer") {
+  console.log(res);
+  if (res.team === "Engineer") {
     const engineer = new Engineer(
-      res.name,
-      res.id,
-      res.email,
-      res.teamSelect,
+      res.employeeName,
+      res.employeeId,
+      res.employeeEmail,
+      res.team,
       res.git
     );
     teamMembers.push(engineer);
-  } else if (res.memberSelect === "Intern") {
+  }
+  if (res.team === "Intern") {
     const intern = new Intern(
-      res.name,
-      res.id,
-      res.email,
-      res.teamSelect,
+      res.employeeName,
+      res.employeeId,
+      res.employeeEmail,
+      res.team,
       res.school
     );
     teamMembers.push(intern);
   }
 
-  if (res.done) {
-    teamInfo();
+  if (res.team == "Done") {
+    console.log("Done");
+    //Write file here
   } else {
-    console.log("no new members");
-    console.log(teamMembers);
-    // templateLanding(teamMembers);
-    return;
+    console.log("broken");
   }
 };
+
 init();
 // iq.prompt(managerPrompt)
 //   .then(
