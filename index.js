@@ -124,9 +124,9 @@ const teamInfo = async () => {
     const engi = new Engineer(
       res.employeeName,
       res.employeeId,
-      res.employeeEmail,
       res.team,
-      res.github
+      res.github,
+      res.employeeEmail
     );
     teamMembers.push(engi);
   }
@@ -134,9 +134,9 @@ const teamInfo = async () => {
     const intern = new Intern(
       res.employeeName,
       res.employeeId,
-      res.employeeEmail,
+      res.team,
       res.school,
-      res.team
+      res.employeeEmail
     );
     teamMembers.push(intern);
   }
