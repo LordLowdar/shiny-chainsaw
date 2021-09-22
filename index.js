@@ -3,6 +3,9 @@ const fs = require("fs");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+const generateHTML = require("./src/templateLanding");
+const generateAllMembers = require("./src/card");
+const newHtml = require("./src/newGenerate");
 
 const managerPrompt = [
   {
@@ -27,12 +30,20 @@ const managerPrompt = [
   },
 ];
 
+const continuePrompt = [
+  {
+    type: "confirm",
+    name: "team",
+    message: "Do you have more members?",
+  },
+];
+
 const teamPrompt = [
   {
     type: "list",
     name: "team",
     message: "What other members do you need?",
-    choices: ["Engineer", "Intern", "Done"],
+    choices: ["Engineer", "Intern"],
   },
   {
     type: "input",
@@ -71,94 +82,70 @@ const teamPrompt = [
     type: "confirm",
     message: "Are you done adding memembers?",
     name: "done",
-    when(status) {
-      let validate = "Done";
-      return status.team && status.team.includes(validate);
-    },
+    // when(status) {
+    //   let validate = "Done";
+    //   return status.team && status.team.includes(validate);
+    // },
   },
 ];
-
-const generateHTML = (answers) =>
-  `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<title>Team Builder</title>
-</head>
-<body>
-<div class="card" style="width: 18rem;">
-<div class="card-body">
-<h1 class="display-2">${answers.name}</h1>
-<p class="card-text">Get a snapshot about me!</p>
-</div>
-<ul class="list-group list-group-flush">
-<li class="list-group-item">I am from ${response.managerName}</li>
-<li class="list-group-item">In my spare time I ${response.name}</li>
-<li class="list-group-item">My Favorite animal is ${response.animal}</li>
-</ul>
-<div class="card-body">
-<a href="${response.gitHub}" class="card-link" target="_blank">Here's my GitHub!</a>
-<a href="${response.linkedIn}" class="card-link" target="_blank">And my LinkedIn!</a>
-</div>
-</div>
-</body>
-</html>`;
 
 var teamMembers = [];
 
 const init = async () => {
   const res = await iq.prompt(managerPrompt);
-  console.log(res);
+
   const manager = new Manager(
     res.managerName,
     res.managerId,
     res.managerEmail,
+    "Manager",
     res.office
   );
   teamMembers.push(manager);
+  carryOn();
+};
 
-  teamInfo();
+const carryOn = async () => {
+  const res = await iq.prompt(continuePrompt);
+
+  if (res.team) {
+    teamInfo();
+  } else {
+    newHtml(teamMembers);
+  }
 };
 
 const teamInfo = async () => {
   const res = await iq.prompt(teamPrompt);
   console.log(res);
   if (res.team === "Engineer") {
-    const engineer = new Engineer(
+    console.log(res);
+    console.log("LOOK");
+    const engi = new Engineer(
       res.employeeName,
       res.employeeId,
       res.employeeEmail,
       res.team,
-      res.git
+      res.github
     );
-    teamMembers.push(engineer);
+    teamMembers.push(engi);
   }
   if (res.team === "Intern") {
     const intern = new Intern(
       res.employeeName,
       res.employeeId,
       res.employeeEmail,
-      res.team,
-      res.school
+      res.school,
+      res.team
     );
     teamMembers.push(intern);
   }
 
-  if (res.team == "Done") {
-    console.log("Done");
-    //Write file here
+  if (res.done) {
+    newHtml(teamMembers);
   } else {
-    console.log("broken");
+    teamInfo();
   }
 };
 
 init();
-// iq.prompt(managerPrompt)
-//   .then(
-//     iq.prompt(teamPrompt).then((response) => {
-//       console.log(response);
-//     })
-//   );

@@ -1,7 +1,4 @@
-const generateMembers = require("./card");
-const fs = require("fs");
-const generateHTML = (answers) => {
-  const html = `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -11,13 +8,7 @@ const generateHTML = (answers) => {
 	<title>Team Builder</title>
 </head>
 <body>
-${generateMembers(answers)}
+[object Object]
 
 </body>
-</html>`;
-
-  fs.writeFile("./dist/index.html", html, (err) => {
-    if (err) throw err;
-  });
-};
-module.exports = generateHTML;
+</html>

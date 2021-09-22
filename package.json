@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/LordLowdar/shiny-chainsaw#readme",
   "dependencies": {
-    "inquirer": "^8.1.2",
+    "inquirer": "^8.1.5",
     "jest": "^27.1.1"
   }
 }
