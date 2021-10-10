@@ -98,7 +98,6 @@ const init = async () => {
     res.managerName,
     res.managerId,
     res.managerEmail,
-    "Manager",
     res.office
   );
   teamMembers.push(manager);
@@ -111,7 +110,7 @@ const carryOn = async () => {
   if (res.team) {
     teamInfo();
   } else {
-    newHtml(teamMembers);
+    generateHTML(teamMembers);
   }
 };
 
@@ -124,7 +123,6 @@ const teamInfo = async () => {
     const engi = new Engineer(
       res.employeeName,
       res.employeeId,
-      res.team,
       res.github,
       res.employeeEmail
     );
@@ -134,7 +132,6 @@ const teamInfo = async () => {
     const intern = new Intern(
       res.employeeName,
       res.employeeId,
-      res.team,
       res.school,
       res.employeeEmail
     );
@@ -142,7 +139,7 @@ const teamInfo = async () => {
   }
 
   if (res.done) {
-    newHtml(teamMembers);
+    generateHTML(teamMembers);
   } else {
     teamInfo();
   }
