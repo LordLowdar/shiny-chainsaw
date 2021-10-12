@@ -5,8 +5,8 @@ describe("Validate Engineer", function () {
     const testEngineer = new Engineer(
       "John",
       7,
-      "Yaboyjohn@gmail.com",
-      "Githubby"
+      "Githubby",
+      "Yaboyjohn@gmail.com"
     );
     expect(testEngineer.github).toEqual("Githubby");
   });
@@ -14,8 +14,8 @@ describe("Validate Engineer", function () {
     const testEngineer = new Engineer(
       "John",
       7,
-      "Yaboyjohn@gmail.com",
-      "Githubby"
+      "Githubby",
+      "Yaboyjohn@gmail.com"
     );
     expect(testEngineer.getRole()).toEqual("Engineer");
   });
