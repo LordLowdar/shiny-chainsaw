@@ -31,6 +31,9 @@ at first please make sure to install all dependecies.
 ## Usage
 In your terminal make use of node and run the index.js. You will be prompt for information. This will help generate a  simple HTML page to display it all.
 
+<a href="https://youtu.be/jMvQeOW2hiU">Video here</a>
+https://youtu.be/jMvQeOW2hiU
+
 
 
 
